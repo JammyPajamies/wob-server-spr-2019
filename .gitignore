@@ -13,6 +13,3 @@ src/log/
 *.class
 .tmp
 wob-server.iml
-gradle/
-*gradle*
-*.iml
