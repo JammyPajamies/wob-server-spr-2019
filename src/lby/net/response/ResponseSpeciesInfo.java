@@ -5,7 +5,7 @@ import cos.util.Log;
 import java.util.ArrayList;
 import shared.metadata.NetworkCode;
 import shared.util.GamePacket;
-import sun.security.ssl.Debug;
+//import sun.security.ssl.Debug;
 
 public class ResponseSpeciesInfo extends GameResponse {
     
