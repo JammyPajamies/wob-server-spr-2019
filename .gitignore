@@ -16,3 +16,4 @@ wob-server.iml
 gradle/
 *gradle*
 *.iml
+*.MF
