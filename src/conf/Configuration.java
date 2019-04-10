@@ -10,11 +10,12 @@ public class Configuration {
     public static int COSPortNumber =  9254;
     public static int RRPortNumber = 9253;
 
-    public static String DBURL = "localhost";
+    public static String DBURL = "seadivided.ddns.net";
+    //public static String DBURL = "localhost";
     //public static String DBURL = "thecity.sfsu.edu";
-    public static String DBName =  "csc63101";
+    public static String DBName =  "wob_db";
     public static String DBUsername = "csc63101";
-    public static String DBPassword = "csc631_01";
+    public static String DBPassword = "Csc631_01";
 
     /*
     public static String DBName =  "wob";

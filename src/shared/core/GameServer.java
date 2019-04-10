@@ -109,12 +109,16 @@ public class GameServer {
      */
     public void configure() throws ConfigureException {
         // Initialize tables for global use
+        Log.printf("Initializing ServerResources...");
         ServerResources.init();
+        Log.printf("Initializing GameRequestTable...");
         GameRequestTable.init(); // Contains request codes and classes
+        Log.printf("Initializing ExpTable...");
         ExpTable.init(); // Contains experience required per level
         // Update Badge Thresholds
         WorldController.getInstance().init();
         BadgeController.setBadgeScores();
+        Log.printf("Server config complete.");
     }
 
     /**
@@ -335,7 +339,9 @@ public class GameServer {
     public static void main(String[] args) {
         Log.printf("World of Balance Lobby Server is starting on port: %d", Configuration.lobbyPortNumber);
         try {
+            Log.printf("Making new wob server...");
             server = new GameServer(Configuration.lobbyPortNumber, Constants.MAX_CLIENT_THREADS);
+            Log.printf("Configuring new wob server...");
             server.configure();            
             Log.println("WoB current day is " + SpeciesChangeListDAO.fetchDay());
             MiniGameServers.getInstance().runServers();

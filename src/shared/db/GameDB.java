@@ -35,12 +35,15 @@ public class GameDB {
                 Configuration.DBURL, Configuration.DBName,
                 Configuration.DBUsername, Configuration.DBPassword
         );
+        Log.printf("Configuring new gameDB with settings: %s", connectURI);
 
+        Log.printf("Setting up connection to DB datasource...");
         dataSource = ConnectionPool.setupDataSource(connectURI);
     }
 
     /**
-     * Parses the database configuration file and store those values into
+     * Parses the database configuration file and store those values intomysql -u root -p
+     * 
      * memory.
      */
     private void configure() {
@@ -57,9 +60,11 @@ public class GameDB {
      */
     public static Connection getConnection() throws SQLException {
         if (gameDB == null) {
+            Log.printf("GameDB is null...");
             gameDB = new GameDB();
         }
 
+        Log.printf("Executing dataSource.getConnection...");
         return dataSource.getConnection();
     }
 

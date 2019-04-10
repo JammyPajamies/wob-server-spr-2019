@@ -13,6 +13,7 @@ import org.apache.commons.pool.impl.GenericObjectPool;
 import org.apache.commons.dbcp.PoolingDataSource;
 import org.apache.commons.dbcp.PoolableConnectionFactory;
 import org.apache.commons.dbcp.DriverManagerConnectionFactory;
+import shared.util.Log;
 
 /**
  * The ConnectionPool class prepares a data source for use. Consists of a
@@ -21,6 +22,7 @@ import org.apache.commons.dbcp.DriverManagerConnectionFactory;
 public class ConnectionPool {
 
     public static DataSource setupDataSource(String connectURI) {
+        Log.printf("setting up Datasource...");
         /*
          * First, we'll need a ObjectPool that serves as the
          * actual pool of connections.
@@ -55,6 +57,7 @@ public class ConnectionPool {
                 GenericObjectPool.DEFAULT_MAX_ACTIVE,
                 GenericObjectPool.DEFAULT_MIN_EVICTABLE_IDLE_TIME_MILLIS, true);
 
+        Log.printf("connectionPool created...");
         /*
          * Next, we'll create a ConnectionFactory that the
          * pool will use to create Connections.
@@ -64,6 +67,7 @@ public class ConnectionPool {
         DriverManagerConnectionFactory connectionFactory = new DriverManagerConnectionFactory(
                 connectURI, null);
 
+        Log.printf("ConnectionFactory created...");
         /*
          * Now we'll create the PoolableConnectionFactory, which wraps
          * the "real" Connections created by the ConnectionFactory with
@@ -72,11 +76,13 @@ public class ConnectionPool {
         PoolableConnectionFactory poolableConnectionFactory = new PoolableConnectionFactory(
                 connectionFactory, connectionPool, null, "SELECT * FROM `species` LIMIT 1", false, true);
 
+        Log.printf("poolableConnectionFactory created...");
         /*
          * Finally, we create the PoolingDriver itself,
          * passing in the object pool we created.
          */
         PoolingDataSource dataSource = new PoolingDataSource(connectionPool);
+        Log.printf("PoolingDataSource created...");
 
         return dataSource;
     }

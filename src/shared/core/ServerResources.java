@@ -11,6 +11,7 @@ public class ServerResources {
 
     public static void init() throws ConfigureException {
         speciesTable = new SpeciesTable();
+        Log.printf("Initializing species table...");
         speciesTable.initialize();
     }
 

@@ -32,6 +32,7 @@ public final class SpeciesDAO {
     public static List<SpeciesType> getSpecies() {
         List<SpeciesType> types = new ArrayList<SpeciesType>();
 
+        Log.printf("Readying query...");
         String query = ""
                 + "SELECT *, "
                 + "GROUP_CONCAT(`node_id`, ':', `distribution`) AS node_list, "
@@ -41,15 +42,19 @@ public final class SpeciesDAO {
                 + "INNER JOIN `species_nodes` sn ON s.`species_id` = sn.`species_id` "
                 + "GROUP BY s.`species_id` "
                 + "ORDER BY s.`species_id`, sn.`node_id`";
+        Log.printf(query);
 
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         try {
+            Log.printf("Getting DB connection...");
             con = GameDB.getConnection();
+            Log.printf("Acquired DB connection...");
             pstmt = con.prepareStatement(query);
 
+            Log.printf("Sending query...");
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
