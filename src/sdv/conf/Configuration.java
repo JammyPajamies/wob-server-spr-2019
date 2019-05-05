@@ -1,4 +1,4 @@
-package conf;
+package sdv.conf;
 
 public class Configuration {
 	public static int lobbyPortNumber = 9255;

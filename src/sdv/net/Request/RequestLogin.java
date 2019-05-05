@@ -7,7 +7,11 @@ package sdv.net.Request;
 
 import sdv.core.GameClient;
 import sdv.core.GameServer;
+import sdv.db.DAO;
+import sdv.db.UsersDAO;
+
 import java.io.IOException;
+
 import shared.metadata.Constants;
 import sdv.model.Player;
 import sdv.net.Response.ResponseLogin;
@@ -20,7 +24,7 @@ import shared.util.Log;
  *  The RequestLogin class authenticates the user information to log in. Other
  * tasks as part of the login process lies here as well.
  */
-public class RequestLogin extends GameRequest{
+public class RequestLogin extends GameRequest {
 
 
     // Data
@@ -44,42 +48,46 @@ public class RequestLogin extends GameRequest{
 
     @Override
     public void doBusiness() throws Exception {
-        Log.printf("User '%s' is connecting...", user_id);
+        Log.printf("\nUser '%s' is connecting...", user_id);
 
+        // DB
+        Player login = UsersDAO.getUserFromDbIfCredentialsAreValid(user_id, password);
+        if(login != null) {
+        		// Log.println("\n" + login.getPlayer_id() + ": " + login.getUsername() + " login successful..");
+        } else {
+        		responseLogin.setStatus((short) 1); // User info is incorrect
+        		Log.println_e("Unable to authenticate username: " + user_id);
+        		return;
+        }
+        
         Player player = null;
         // Checks if the connecting client meets the minimum version required
         if (version.compareTo(Constants.CLIENT_VERSION) >= 0) {
             if (!user_id.isEmpty()) {
                 player = new Player(user_id.hashCode());
-            	player.setUsername(user_id);
-            	player.setPassword(password);
-                
+	            	player.setUsername(user_id);
+	            	player.setPassword(password);
             }
 
-            if (player == null) {
-                responseLogin.setStatus((short) 1); // User info is incorrect
-                Log.printf("User '%s' has failed to log in.", user_id);
-            } else {
-                if (client.getPlayer() == null || player.getPlayer_id() != client.getPlayer().getPlayer_id()) {
-                    GameClient thread = GameServer.getInstance().getThreadByPlayerID(player.getPlayer_id());
-                    // If account is already in use, remove and disconnect the client
-                    if (thread != null) {
-                        responseLogin.setStatus((short) 2); // Account is in use
-                        thread.removePlayerData();
-                        thread.newSession();
-                        Log.printf("User '%s' account is already in use.", user_id);
-                    } else {
-                        // Continue with the login process
-                        GameServer.getInstance().setActivePlayer(player);
-                        player.setClient(client);
-                        // Pass Player reference into thread
-                        client.setPlayer(player);
-                        // Set response information
-                        responseLogin.setStatus((short) 0); // Login is a success
-                        responseLogin.setPlayer(player);
+            if (client.getPlayer() == null || player.getPlayer_id() != client.getPlayer().getPlayer_id()) {
+                GameClient thread = GameServer.getInstance().getThreadByPlayerID(player.getPlayer_id());
+                // If account is already in use, remove and disconnect the client
+                if (thread != null) {
+                    responseLogin.setStatus((short) 2); // Account is in use
+                    thread.removePlayerData();
+                    thread.newSession();
+                    Log.printf("User '%s' account is already in use.", user_id);
+                } else {
+                    // Continue with the login process
+                    GameServer.getInstance().setActivePlayer(player);
+                    player.setClient(client);
+                    // Pass Player reference into thread
+                    client.setPlayer(player);
+                    // Set response information
+                    responseLogin.setStatus((short) 0); // Login is a success
+                    responseLogin.setPlayer(player);
 
-                        Log.printf("User '%s' has successfully logged in.", player.getUsername());
-                    }
+                    Log.printf("User '%s' has successfully logged in.", player.getUsername());
                 }
             }
         } else {

@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.sql.DataSource;
 
+import org.apache.commons.dbcp.BasicDataSource;
+
 // Other Imports
 import conf.Configuration;
 import sdv.conf.DBConf;
@@ -37,8 +39,16 @@ public class GameDB {
                 Configuration.DBURL, Configuration.DBName,
                 Configuration.DBUsername, Configuration.DBPassword
         );
-
+        
+        Log.println("\nRemote DB URL: " + connectURI);
+        
         dataSource = ConnectionPool.setupDataSource(connectURI);
+        
+        if(dataSource != null) {
+        		Log.println("\nConnection to DB successful");
+        } else {
+        		Log.println("\nConnection to DB not successful");
+        }
     }
 
     /**
@@ -48,6 +58,15 @@ public class GameDB {
     private void configure() {
         // ConfFileParser confFileParser = new ConfFileParser("conf/db.conf");
         // configuration.setConfRecords(confFileParser.parse());
+    }
+    
+    /**
+     * Retrieve the data source for database access.
+     *
+     * @return the data source
+     */
+    public DataSource getDataSource() {
+        return dataSource;
     }
 
     /**

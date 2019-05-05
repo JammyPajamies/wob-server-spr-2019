@@ -2,6 +2,8 @@ package sdv.core;
 
 import conf.Configuration;
 import sdv.PlayTime.PreySpawning;
+import sdv.db.DAO;
+
 import java.util.concurrent.Executors;
 import shared.metadata.Constants;
 import shared.util.Log;
@@ -39,18 +41,19 @@ public class GameServer {
         // Initialize tables for global use
         GameRequestTable.init(); // Contains request codes and classes
         // Initialize database connection
-        /*
+        
+        Log.println("Trying to connect to database...");
         if (DAO.getInstance() == null) {
             Log.println_e("Database Connection Failed!");
             System.exit(-1);
         }
-        */
+        
         // Preload world-related objects
         // initialize();
         // Thread Pool for Clients
         clientThreadPool = Executors.newCachedThreadPool();
         // generate random spawning points 
-        Log.printf("Spawning prey location saved");
+        Log.printf("\nSpawning prey location saved");
         PreySpawning.getInstance().spawn();
         //TODO: Instantiate the PreyTimeManager
     }
@@ -89,7 +92,7 @@ public class GameServer {
                 try {
                     // Accept the incoming connection from client
                     Socket clientSocket = serverSocket.accept();
-                    Log.printf("%s is connecting...", clientSocket.getInetAddress().getHostAddress());
+                    Log.printf("\n%s is connecting...", clientSocket.getInetAddress().getHostName());
                     // Create a runnable instance to represent a client that holds the client socket
                     String session_id = createUniqueID();
                     GameClient client = new GameClient(session_id, clientSocket);

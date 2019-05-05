@@ -147,6 +147,11 @@ public class NetworkCode {
     public final static short SD_HEARTBEAT = 411;
     public final static short SD_NPCPOSITION = 412;
     public final static short SD_RESPAWN = 413;
+    public final static short SD_GAME_LOGOUT = 414;
+    public final static short SD_PLAYER_FISH_SELECTION = 415;
+    public final static short SD_GET_PLAYERS_INFO = 416;
+    public final static short SD_REGISTER = 417;
+    public final static short SD_SET_FISH_SELECTION = 418;
 
     /**
      * Check for duplicate values, if any.

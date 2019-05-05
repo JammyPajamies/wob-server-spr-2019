@@ -82,7 +82,7 @@ public class GameRequestTable {
                 request = (GameRequest) name.newInstance();
                 request.setID(request_code);
             } else {
-                Log.printf_e("Request Code [%d] does not exist!\n", request_code);
+                Log.printf_e("\nUnrecognized request code [%d] for SDV server!", request_code);
             }
         } catch (Exception e) {
             Log.println_e(e.getMessage());

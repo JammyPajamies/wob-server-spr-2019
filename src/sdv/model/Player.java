@@ -22,7 +22,12 @@ public class Player {
         this.player_id = player_id;
     }
 
-
+     public Player(int player_id, String username, String password) {
+         this.player_id = player_id;
+         this.username = username;
+         this.password = password;
+     }
+     
     public int getPlayer_id() {
         return player_id;
     }
