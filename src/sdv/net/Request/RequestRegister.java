@@ -27,7 +27,7 @@ public class RequestRegister extends GameRequest {
 
 	@Override
 	public void doBusiness() throws Exception {
-		Log.printf("Registering user '%s'...", username);
+		Log.printf("\nRegistering user '%s'...", username);
         
         try {
         		// DB

@@ -79,10 +79,11 @@ public class GameRequestTable {
             Class name = requestTable.get(request_code);
 
             if (name != null) {
+            		Log.printf("\nRequest received [%d]", request_code);
                 request = (GameRequest) name.newInstance();
                 request.setID(request_code);
             } else {
-                Log.printf_e("\nUnrecognized request code [%d] for SDV server!", request_code);
+                Log.printf_e("\nUnrecognized request code [%d]", request_code);
             }
         } catch (Exception e) {
             Log.println_e(e.getMessage());

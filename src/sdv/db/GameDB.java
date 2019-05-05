@@ -40,14 +40,14 @@ public class GameDB {
                 Configuration.DBUsername, Configuration.DBPassword
         );
         
-        Log.println("\nRemote DB URL: " + connectURI);
+        Log.println("Remote database URL: " + connectURI);
         
         dataSource = ConnectionPool.setupDataSource(connectURI);
         
         if(dataSource != null) {
-        		Log.println("\nConnection to DB successful");
+        		Log.println("\nConnection to database successful");
         } else {
-        		Log.println("\nConnection to DB not successful");
+        		Log.println_e("\nConnection to database not successful");
         }
     }
 

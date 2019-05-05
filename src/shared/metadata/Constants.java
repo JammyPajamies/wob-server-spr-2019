@@ -179,4 +179,7 @@ public class Constants {
     public static final int MIN_PREY = 20;
     public static final int CREDIT_REWARD = 50;
     
+    public static final short SUCCESS_STATUS_CODE = 0;
+    public static final short FAILURE_STATUS_CODE = 1;
+    
 }
