@@ -78,6 +78,7 @@ public class GameServer {
      * Load values from a configuration file.
      */
     public final void configure() {
+    	
     }
     
     private void run() throws IOException {
@@ -87,6 +88,12 @@ public class GameServer {
             serverSocket = new ServerSocket(Configuration.SeaDividedPortNumber);
             Log.printf("Server has started on port: %d", serverSocket.getLocalPort());
             Log.println("Waiting for clients...");
+            
+            // start heartbeat thread
+            //HeartbeatAgent heartbeatAgent = new HeartbeatAgent();
+            //Thread thread = new Thread(heartbeatAgent);
+            //thread.start();
+            
             // Loop indefinitely to establish multiple connections
             while (!isDone) {
                 try {

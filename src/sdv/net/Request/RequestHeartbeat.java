@@ -5,6 +5,8 @@ import java.io.IOException;
 
 // Other Imports
 import sdv.net.Response.GameResponse;
+import sdv.net.Response.ResponseHeartbeat;
+import sdv.net.Response.ResponseLogin;
 import shared.util.Log;
 
 /**
@@ -12,8 +14,9 @@ import shared.util.Log;
  * the client. Also used to keep the connection alive.
  */
 public class RequestHeartbeat extends GameRequest {
-
+	
     public RequestHeartbeat() {
+    		
     }
 
     @Override

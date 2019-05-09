@@ -180,7 +180,7 @@ public class GameClient implements Runnable{
      
      public void send(GameResponse response) throws IOException {
         outputStream.write(response.constructResponseInBytes());
-    }
+     }
    
      
      public Queue<GameResponse> getUpdates() {
