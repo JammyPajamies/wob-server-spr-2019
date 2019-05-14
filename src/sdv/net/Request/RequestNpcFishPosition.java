@@ -26,17 +26,21 @@ public class RequestNpcFishPosition extends GameRequest {
         
         Prey fish;
         while(numFish > 0) {
-            fish = new Prey();
-            int preyID = Integer.parseInt(DataReader.readString(dataInput));
-            // System.out.println("Prey id: " + preyID);
-            fish.setPrey_id(preyID);
-            fish.setSpecies_id(Integer.parseInt(DataReader.readString(dataInput)));
-            fish.setX(Float.parseFloat(DataReader.readString(dataInput)));
-            fish.setY(Float.parseFloat(DataReader.readString(dataInput)));
-            fish.setRotation(Float.parseFloat(DataReader.readString(dataInput)));
-            fishMap.put(fish.getPrey_id(),fish);
-            // System.out.println("Parsed. ");
-            numFish--;
+        		try {
+        			fish = new Prey();
+                    int preyID = Integer.parseInt(DataReader.readString(dataInput));
+                    // System.out.println("Prey id: " + preyID);
+                    fish.setPrey_id(preyID);
+                    fish.setSpecies_id(Integer.parseInt(DataReader.readString(dataInput)));
+                    fish.setX(Float.parseFloat(DataReader.readString(dataInput)));
+                    fish.setY(Float.parseFloat(DataReader.readString(dataInput)));
+                    fish.setRotation(Float.parseFloat(DataReader.readString(dataInput)));
+                    fishMap.put(fish.getPrey_id(),fish);
+                    // System.out.println("Parsed. ");
+                    numFish--;
+        		} catch (Exception e) {
+        			
+        		}
         }
     }
 
