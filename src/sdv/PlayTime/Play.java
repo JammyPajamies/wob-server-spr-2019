@@ -32,7 +32,7 @@ public class Play {
 //    private 
     private Map<Integer, PlayTimePlayer> rPlayers = new HashMap<Integer, PlayTimePlayer>(); //player_id ->PlayerInformation
     private Map<Integer, Prey> mapNpcFish = new HashMap<Integer, Prey>();
-    private int playID;
+    public int playID;
     private int mapID;
     public int species1;
     public  int species2;
@@ -46,6 +46,9 @@ public class Play {
     public  int HOST_client_id; 
 
     private short playersReadyToStart;
+    
+    public int playerId = -1;
+    public int opponentId = -1;
     
     public Play(int playID) {
         this.playID = playID;

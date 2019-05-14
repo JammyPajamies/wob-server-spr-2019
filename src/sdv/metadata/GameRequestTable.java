@@ -79,7 +79,7 @@ public class GameRequestTable {
             Class name = requestTable.get(request_code);
 
             if (name != null) {
-            		Log.printf("\nRequest received [%d]", request_code);
+            		// Log.printf("\nRequest received [%d]", request_code);
                 request = (GameRequest) name.newInstance();
                 request.setID(request_code);
             } else {

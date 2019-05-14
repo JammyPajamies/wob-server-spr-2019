@@ -27,7 +27,6 @@ public class HeartbeatAgent implements Runnable {
 				System.out.println("\nHeartbeat.... " + client.getID() + "\n");
 				client.send(new ResponseHeartbeat());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

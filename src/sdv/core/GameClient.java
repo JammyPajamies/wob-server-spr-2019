@@ -41,7 +41,6 @@ public class GameClient implements Runnable{
     private DataInputStream dataInputStream; // Stores incoming requests for use
     private Queue<GameResponse> updates; // Temporarily store responses for client
     private boolean isDone;
-    private boolean isAlive = true;
     private Player player;
     RequestSDPosition lastPosRequest;
     //Queue<GameResponse> updates; // Temporarily store responses for client
@@ -127,7 +126,7 @@ public class GameClient implements Runnable{
                             Log.printf_e("Client %s connection lost, attempting to reconnect.", session_id);
                             //returns -1 if the player had not opponent
                             int opp_id = PlayManager.getInstance().getPlayByPlayerID(player.getPlayer_id()).getOpponentID(player.getPlayer_id());
-                            if(opp_id < 0){
+                            if(opp_id < 0) {
                                 ResponseSDDisconnect response = new ResponseSDDisconnect();
                                 NetworkManager.addResponseForUser(opp_id, response);
                             }

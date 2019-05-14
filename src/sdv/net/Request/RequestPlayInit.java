@@ -36,7 +36,7 @@ public class RequestPlayInit extends GameRequest {
                 player_id + "], RoomID[" + room_id + "]");
         
         //reconnection check.
-        Play test = PlayManager.getInstance().getPlayByPlayerID(player_id);
+        /*Play test = PlayManager.getInstance().getPlayByPlayerID(player_id);
         if(test != null){
             status = 2;
         }else{
@@ -46,21 +46,25 @@ public class RequestPlayInit extends GameRequest {
             if(tester == Constants.MAX_NUMBER_OF_PLAYERS){
                 status = 1;
             }
-        }catch(Exception ex){}
+        }catch(Exception ex){
+        		// ex.printStackTrace();
         }
-        
+        }
+        */
         Play play = PlayManager.getInstance().createPlay(player_id, room_id);
         // if((PlayManager.getInstance().playerPlayList.get(room_id).getPlayers().size())==1){
-        if(play.getPlayers().size() == 1){
+        if(play.getPlayers().size() == 1) {
             play.HOST_client_id = player_id;
             Log.printf("The host of Play:" + play.getID() + " is Player:" + player_id);
         }
+        
         if(status !=2)
             play.getPlayer(player_id).setNumber(play.getPlayers().size());
+        
         Log.printf("play created, assigning player number %d.", play.getPlayers().size());
         
         Log.println("Trying to start Play: PlayerID[" +
-                player_id + "], RoomID[" + room_id + "]");
+                player_id + "], RoomID[" + play.playID + "]");
         
         if(play != null) {
             ResponsePlayInit response = new ResponsePlayInit();
@@ -70,20 +74,23 @@ public class RequestPlayInit extends GameRequest {
             //add response for self
             responses.add(response);
             //get opponent id
-            try{
+            if(play.opponentId == -1) {
+            		Log.printf_e("waiting for opponent in game %d", play.playID);
+        		} else {
+        			Log.println("Play created with players: " + play.getPlayers().keySet().toString());
+        			GameServer.getInstance().getThreadByPlayerID(play.opponentId).send(response);
+        		}
+            /*try{
+            	
             int opp_id= PlayManager.getInstance().getPlayByPlayerID(client.getPlayer().getPlayer_id())
                 .getOpponent(client.getPlayer()).getPlayer_id();
 
-            /* this is meant for adding a response for all players in a match.
-            for(int p_id : play.getPlayers().keySet()) {
-                NetworkManager.addResponseForUser(p_id, response);
-            }*/
             //send response to opponent
-            GameServer.getInstance().getThreadByPlayerID(opp_id).send(response);
-            }catch(Exception ex){
-                Log.printf_e("waiting for opponent in game %d", room_id);
-            }
-            Log.println("Play created with players: " + play.getPlayers().keySet().toString());
+            GameServer.getInstance().getThreadByPlayerID(play.opponentId).send(response);
+            }catch(Exception ex) {
+                Log.printf_e("waiting for opponent in game %d", play.playID);
+            }*/
+            
         }
         
     }
