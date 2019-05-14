@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+
 import java.util.HashMap;
 import sdv.model.*;
 import sdv.PlayTime.PlayTimePlayer;
@@ -81,4 +82,28 @@ public class PlayInfoDAO {
         return player;
     }
     
+    public static int getSpeciesId(int player_id) throws SQLException {
+		Connection connection = null;
+	    PreparedStatement pstmt;
+	    int returnVal = -1;
+	    String getPlayerInfoQuery = "SELECT species_id FROM sdv_playinfo_player WHERE player_id=" + player_id;
+	    try {
+	        connection = DAO.getDataSource().getConnection();;
+	        pstmt = connection.prepareStatement(getPlayerInfoQuery);
+	        pstmt.setInt(1,player_id);
+	        ResultSet rs;
+	        rs = pstmt.executeQuery();
+	        rs.next();
+	        returnVal = rs.getInt("species_id");
+	    } catch(Exception e) {
+	        Log.println_e(e.getMessage());
+	    } finally {
+	        if (connection != null) {
+	            connection.close();
+	            Log.println("Successfully disconnected from database.");
+	        }
+	    }
+	    
+	    return returnVal;
+	}
 }
