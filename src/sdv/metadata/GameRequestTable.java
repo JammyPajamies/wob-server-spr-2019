@@ -45,7 +45,7 @@ public class GameRequestTable {
         add(NetworkCode.SD_EAT_PREY,"RequestDestroyPrey");
         add(NetworkCode.SD_SCORE,"RequestScore");
         add(NetworkCode.SD_HEARTBEAT,"RequestHeartbeat");
-        add(NetworkCode.SD_NPCPOSITION, "RequestNpcFishPosition" );
+        add(NetworkCode.SD_NPCPOSITION, "RequestNpcFishPosition");
     }
 
     /**
@@ -79,11 +79,12 @@ public class GameRequestTable {
             Class name = requestTable.get(request_code);
 
             if (name != null) {
-            		// Log.printf("\nRequest received [%d]", request_code);
+            		if(request_code != 412)
+            			Log.printf("\nRequest received [%d]\n", request_code);
                 request = (GameRequest) name.newInstance();
                 request.setID(request_code);
             } else {
-                Log.printf_e("\nUnrecognized request code [%d]", request_code);
+                Log.printf_e("\nUnrecognized request code [%d]\n", request_code);
             }
         } catch (Exception e) {
             Log.println_e(e.getMessage());
